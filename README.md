@@ -12,11 +12,11 @@
 
 ## ✨ Características Principales
 
-- **🐾 Sistema de Fusión de Mascotas:** Combina criaturas básicas y cristales elementales para evolucionar y descubrir nuevas especies con diseños y poderes únicos.
-- **💎 Recolección de Cristales Cósmicos:** Obtén fragmentos estelares, gemas lunares y cristales solares con distintas rarezas y propiedades de combinación.
-- **🌍 Exploración y Progresión:** Avanza a través de distintos mundos o constelaciones desbloqueando nuevos desafíos y recetas de fusión.
-- **📖 Enciclopedia / Bestiario Cósmico:** Registra cada mascota y cristal descubierto para completar la colección al 100%.
-- **🎨 Estilo Visual y Sonoro:** Estética colorida con efectos visuales brillantes y atmósfera espacial envolvente.
+* 🐾 **Sistema de Fusión de Mascotas:** Combina criaturas básicas y cristales elementales para evolucionar y descubrir nuevas especies con diseños y poderes únicos.
+* 💎 **Recolección de Cristales Cósmicos:** Obtén fragmentos estelares, gemas lunares y cristales solares con distintas rarezas y propiedades de combinación.
+* 🪐 **Exploración y Progresión:** Avanza a través de distintos mundos o constelaciones desbloqueando nuevos desafíos y recetas de fusión.
+* 📖 **Enciclopedia / Bestiario Cósmico:** Registra cada mascota y cristal descubierto para completar la colección al 100%.
+* 🎨 **Estilo Visual y Sonoro:** Estética colorida con efectos visuales brillantes y atmósfera espacial envolvente.
 
 ---
 
@@ -31,30 +31,26 @@
 
 ## 🛠️ Tecnologías Utilizadas
 
-*(Completar o ajustar según el motor y herramientas que estés usando)*
-
-- **Motor de Juego / Framework:** [Ej. Unity / Godot / Phaser / HTML5 + JavaScript]
-- **Lenguaje:** [Ej. C# / GDScript / TypeScript / JavaScript]
-- **Arte y Diseño:** [Ej. Aseprite / Illustrator / Figma]
-- **Audio:** [Ej. Audacity / FMOD]
+* **Frontend / Estructura:** HTML5, CSS3, JavaScript (Web / PWA)
+* **Arte y Diseño:** Imágenes generadas con IA (Gemini)
+* **Control de Versiones:** Git & GitHub
 
 ---
 
 ## 🚀 Instalación y Ejecución
 
 ### Requisitos previos
-- [Indicar requisitos, ej. Navegador moderno / Node.js / Motor correspondiente]
+* Un navegador web moderno (Chrome, Edge, Firefox, Safari).
+* *(Opcional)* Node.js si deseas correr un servidor local.
 
 ### Pasos para ejecutar en local
+
 ```bash
 # 1. Clonar este repositorio
-git clone [https://github.com/tu-usuario/fusion-cosmica.git](https://github.com/tu-usuario/fusion-cosmica.git)
+git clone [https://github.com/ameliavillalba013-art/mascotas-fusion-cosmica.git](https://github.com/ameliavillalba013-art/mascotas-fusion-cosmica.git)
 
 # 2. Entrar al directorio del proyecto
-cd fusion-cosmica
+cd mascotas-fusion-cosmica
 
-# 3. Instalar dependencias (si aplica)
-npm install
-
-# 4. Iniciar el proyecto
-npm start
+# 3. Abrir el proyecto
+# Abre el archivo index.html directamente en tu navegador web
