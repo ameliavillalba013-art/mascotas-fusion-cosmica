@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A&A | Pechuga de Pollo Artesanal</title>
+    <style>
+        :root {
+            --primary: #c0392b;
+            --primary-dark: #a93226;
+            --secondary: #27ae60;
+            --dark: #2c3e50;
+            --light: #f8f9fa;
+            --gray: #7f8c8d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=1200&q=80') center/cover;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #f39c12;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .badge-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+        }
+
+        container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: block;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            display: block;
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Características */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        /* Precios */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .price-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-card.featured {
+            border: 2px solid var(--primary);
+            transform: scale(1.02);
+        }
+
+        .price-header {
+            background: var(--dark);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .price-card.featured .price-header {
+            background: var(--primary);
+        }
+
+        .price-body {
+            padding: 25px;
+            flex-grow: 1;
+        }
+
+        .price-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .price-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .price-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Conservación */
+        .info-box {
+            background: #e8f8f5;
+            border-left: 5px solid var(--secondary);
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 50px;
+        }
+
+        .info-box h3 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        /* Botón WhatsApp Fijo y Normal */
+        .btn-whatsapp {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-align: center;
+            transition: background 0.3s ease;
+            box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #219150;
+        }
+
+        .cta-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.9rem;
+        }
+
+        footer p {
+            margin-bottom: 5px;
+            color: var(--gray);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">A&A</div>
+        <div class="tagline">Fiambre de Pechuga de Pollo Artesanal</div>
+        <p>Sabrosura, elasticidad y frescura 100% natural</p>
+        <div class="badge-container">
+            <span class="badge">🌿 Sin Nitritos ni Curing Salts</span>
+            <span class="badge">🛡️ Envasado al Vacío</span>
+            <span class="badge">📍 Presidencia Roque Sáenz Peña</span>
+        </div>
+    </header>
+
+    <container>
+        <!-- Sobre el Producto -->
+        <section>
+            <h2 class="section-title">Conocé Nuestra Pechuga Artesanal</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <h3>100% Natural</h3>
+                    <p>Elaborada con pechugas seleccionadas, sal y especias naturales. Sin conservantes químicos ni añadidos sintéticos.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Corte y Elasticidad</h3>
+                    <p>Proceso de cocción y prensado controlado que logra fetas elásticas que no se desarman al doblar.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Apta para Freezer</h3>
+                    <p>Podés fraccionar, congelar y conservar manteniendo perfecta la textura, jugosidad y sabor original.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Precios -->
+        <section>
+            <h2 class="section-title">Nuestras Tarifas y Presentaciones</h2>
+            <div class="pricing-grid">
+                
+                <!-- Fraccionado -->
+                <div class="price-card">
+                    <div class="price-header">
+                        <h3>Venta al Público</h3>
+                        <p>Fraccionado al vacío</p>
+                    </div>
+                    <div class="price-body">
+                        <div class="price-amount">$18.000 <span style="font-size: 1rem; font-weight: normal;">/ kg</span></div>
+                        <ul class="price-list">
+                            <li><strong>Trozo 250 g:</strong> $4.500</li>
+                            <li><strong>Trozo 500 g:</strong> $9.000</li>
+                            <li><strong>Trozo 1 kg:</strong> $18.000</li>
+                            <li><strong>Envío gratis:</strong> Compras > 1 kg (Zona Urbana).</li>
+                            <li><strong>Retiro en Taller:</strong> Sin cargo (17:00 a 20:30 hs).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Mayorista Comercio -->
+                <div class="price-card featured">
+                    <div class="price-header">
+                        <h3>Quioscos y Almacenes</h3>
+                        <p>Horma entera (Aprox. 1,8 kg)</p>
+                    </div>
+                    <div class="price-body">
+                        <div class="price-amount">$14.000 <span style="font-size: 1rem; font-weight: normal;">/ kg</span></div>
+                        <ul class="price-list">
+                            <li><strong>2 a 5 hormas:</strong> $14.000 / kg</li>
+                            <li><strong>6 a 9 hormas:</strong> $13.000 / kg</li>
+                            <li><strong>Reparto:</strong> Sin cargo en zona urbana.</li>
+                            <li><strong>Venta:</strong> El cobro se realiza según el peso real de balanza.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Distribuidores -->
+                <div class="price-card">
+                    <div class="price-header">
+                        <h3>Supermercados</h3>
+                        <p>Volumen y Distribuidores</p>
+                    </div>
+                    <div class="price-body">
+                        <div class="price-amount">$11.900 <span style="font-size: 1rem; font-weight: normal;">/ kg</span></div>
+                        <ul class="price-list">
+                            <li><strong>10 o más hormas:</strong> $11.900 / kg</li>
+                            <li><strong>Reparto:</strong> Programado a domicilio/comercio.</li>
+                            <li><strong>Forma de pago:</strong> Efectivo o Transferencia.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Información de Conservación -->
+        <section>
+            <div class="info-box">
+                <h3>❄️ Guía de Conservación</h3>
+                <p><strong>Cerrado al vacío en heladera (2°C a 6°C):</strong> Hasta 25 días.</p>
+                <p><strong>Una vez abierto:</strong> Consumir dentro de los 7 días.</p>
+                <p><strong>En Freezer (-18°C):</strong> Hasta 4 meses (se recomienda congelar fraccionado en trozos).</p>
+            </div>
+        </section>
+
+        <!-- Llamado a la acción -->
+        <div class="cta-container">
+            <h2>¿Querés hacer tu pedido o consultar para tu comercio?</h2>
+            <p style="margin-bottom: 20px;">Nuestro bot de atención te tomará el pedido al instante o te derivará con nosotros.</p>
+            <a href="https://wa.me/5493644000000?text=Hola!%20Quiero%20hacer%20un%20pedido%20de%20pechuga%20A%26A" class="btn-whatsapp" target="_blank">
+                📲 Hacer Pedido por WhatsApp
+            </a>
+        </div>
+    </container>
+
+    <footer>
+        <p><strong>A&A Pechuga de Pollo Artesanal</strong></p>
+        <p>Elaboración propia en Barrio 72 Viviendas (Fonavi) · Presidencia Roque Sáenz Peña, Chaco.</p>
+        <p>&copy; 2026 A&A - Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>
