@@ -1,13 +1,30 @@
 {
-  "background_color": "#ffffff",
-  "dir": "ltr",
-  "display": "standalone",
-  "name": "Cosmic Pet Merge",
-  "orientation": "any",
-  "scope": "/",
+  "name": "CosmicMerge: Fusión Cósmica",
   "short_name": "CosmicMerge",
-  "start_url": "/",
-  "theme_color": "#ffffff",
-  "id": "/",
-  "description": "Un divertido juego de combinar mascotas cósmicas"
+  "start_url": "https://cosmicpetmerge.com/",
+  "display": "standalone",
+  "background_color": "#120a2e",
+  "theme_color": "#4b1e8a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshot1.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Fusión de Mascotas Cósmicas"
+    }
+  ]
 }
