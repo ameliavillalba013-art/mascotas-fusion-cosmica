@@ -1,0 +1,19 @@
+{
+  "name": "Fusión Cósmica: Mascotas & Cristales",
+  "short_name": "Fusión Cósmica",
+  "description": "Un juego de estrategia, colección y fusión en un universo mágico lleno de criaturas estelares y cristales energéticos.",
+  "start_url": "/mascotas-fusion-cosmica/",
+  "scope": "/mascotas-fusion-cosmica/",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#0b0c1e",
+  "theme_color": "#1a103c",
+  "icons": [
+    {
+      "src": "icono-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
