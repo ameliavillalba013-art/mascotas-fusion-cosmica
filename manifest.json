@@ -11,17 +11,10 @@
   "theme_color": "#1a103c",
   "icons": [
     {
-      "src": "https://ameliavillalba013-art.github.io/mascotas-fusion-cosmica/Gemini_Generated_Image_cljklvcljklvcljk.png",
+      "src": "icono.svg",
       "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/svg+xml",
       "purpose": "any"
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "https://ameliavillalba013-art.github.io/mascotas-fusion-cosmica/Gemini_Generated_Image_cljklvcljklvcljk%20(1).png",
-      "sizes": "1280x720",
-      "type": "image/png"
     }
   ]
 }
