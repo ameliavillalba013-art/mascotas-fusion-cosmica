@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Fusión Cósmica: Mascotas & Cristales</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1a103c">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, sans-serif; }
+    body {
+      background: radial-gradient(circle at top, #1a103c, #0b0c1e);
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+    img {
+      width: 180px;
+      height: 180px;
+      border-radius: 24px;
+      object-fit: cover;
+      box-shadow: 0 0 25px rgba(138, 43, 226, 0.6);
+      margin-bottom: 20px;
+    }
+    h1 { font-size: 1.8rem; margin-bottom: 10px; }
+    p { color: #cfc9e8; max-width: 400px; margin-bottom: 25px; line-height: 1.5; }
+    button {
+      background: linear-gradient(135deg, #7b2cbf, #3a0ca3);
+      color: white;
+      border: none;
+      padding: 15px 35px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(123, 44, 191, 0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <img src="Gemini_Generated_Image_cljklvcljklvcljk.png" alt="Fusión Cósmica">
+  <h1>🌌 Fusión Cósmica</h1>
+  <p>Explora el cosmos, recolecta cristales elementales y fusiona adorables mascotas estelares.</p>
+  <button onclick="alert('¡Bienvenido al Altar de Fusión!')">Jugar Ahora</button>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
+</body>
+</html>
