@@ -30,14 +30,32 @@
       max-width: 420px;
       width: 100%;
     }
-    .cover-img {
+    .cover-emblem {
       width: 170px;
       height: 170px;
-      border-radius: 28px;
-      object-fit: cover;
-      box-shadow: 0 0 30px rgba(157, 78, 221, 0.7);
-      margin-bottom: 20px;
-      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 32px;
+      background: radial-gradient(circle at 30% 30%, #9d4edd, #3c096c 70%, #10002b);
+      box-shadow: 0 0 35px rgba(157, 78, 221, 0.75), inset 0 0 20px rgba(255, 255, 255, 0.25);
+      border: 2px solid rgba(224, 170, 255, 0.45);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 22px;
+      position: relative;
+    }
+    .emblem-icons {
+      font-size: 3.4rem;
+      line-height: 1.1;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+    }
+    .emblem-sub {
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ffd166;
+      font-weight: bold;
+      margin-top: 6px;
     }
     h1 { font-size: 1.9rem; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(157, 78, 221, 0.6); }
     .subtitle { color: #cfc9e8; margin-bottom: 28px; line-height: 1.5; font-size: 0.98rem; }
@@ -198,7 +216,10 @@
 
   <!-- PORTADA -->
   <div id="start-screen">
-    <img class="cover-img" src="icon-512.png" alt="Fusión Cósmica">
+    <div class="cover-emblem">
+      <div class="emblem-icons">🐉💎</div>
+      <div class="emblem-sub">Altar Estelar</div>
+    </div>
     <h1>🌌 Fusión Cósmica</h1>
     <p class="subtitle">Tocá dos cristales o mascotas iguales para fusionarlos, descubrir criaturas estelares y acumular energía cósmica.</p>
     <button class="btn-primary" onclick="startGame()">Jugar Ahora</button>
@@ -335,7 +356,6 @@
         return;
       }
 
-      // Si destino está vacío: mover pieza
       if (grid[idx] === null) {
         grid[idx] = grid[selectedIndex];
         grid[selectedIndex] = null;
@@ -345,7 +365,6 @@
         return;
       }
 
-      // Si son del mismo nivel: FUSIONAR
       if (grid[idx] === grid[selectedIndex]) {
         const currentLvl = grid[idx];
         if (currentLvl < ITEMS.length - 1) {
@@ -357,7 +376,6 @@
           energy += 5;
           showToast(`✨ ¡Fusión! Creaste: ${ITEMS[nextLvl].name} (+${ITEMS[nextLvl].pts} pts)`);
         } else {
-          // Nivel máximo: cosechar por gran bono
           grid[idx] = null;
           grid[selectedIndex] = null;
           selectedIndex = null;
@@ -370,7 +388,6 @@
         return;
       }
 
-      // Si es distinto nivel: cambiar selección
       selectedIndex = idx;
       showToast(`Seleccionado: ${ITEMS[grid[idx]].name}`);
       render();
