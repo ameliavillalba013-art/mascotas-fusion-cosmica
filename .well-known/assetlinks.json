@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.ameliavillalba013_art.twa",
+        "sha256_cert_fingerprints": ["07:73:1D:C8:6C:D6:33:58:1A:11:04:62:AE:7D:E8:96:DB:92:73:65:65:7C:59:BD:CE:74:CF:AA:65:89:45:C7"]
+      }
+    }]
