@@ -7,49 +7,401 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1a103c">
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; user-select: none; -webkit-tap-highlight-color: transparent; }
     body {
-      background: radial-gradient(circle at top, #1a103c, #0b0c1e);
+      background: radial-gradient(circle at top, #1d1145, #090a1a);
       color: #ffffff;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      overflow-x: hidden;
+      padding: 16px;
+    }
+
+    /* PANTALLA DE INICIO */
+    #start-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      padding: 20px;
+      max-width: 420px;
+      width: 100%;
     }
-    img {
-      width: 180px;
-      height: 180px;
-      border-radius: 24px;
+    .cover-img {
+      width: 170px;
+      height: 170px;
+      border-radius: 28px;
       object-fit: cover;
-      box-shadow: 0 0 25px rgba(138, 43, 226, 0.6);
+      box-shadow: 0 0 30px rgba(157, 78, 221, 0.7);
       margin-bottom: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.15);
     }
-    h1 { font-size: 1.8rem; margin-bottom: 10px; }
-    p { color: #cfc9e8; max-width: 400px; margin-bottom: 25px; line-height: 1.5; }
-    button {
-      background: linear-gradient(135deg, #7b2cbf, #3a0ca3);
+    h1 { font-size: 1.9rem; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(157, 78, 221, 0.6); }
+    .subtitle { color: #cfc9e8; margin-bottom: 28px; line-height: 1.5; font-size: 0.98rem; }
+    .btn-primary {
+      background: linear-gradient(135deg, #9d4edd, #5a189a);
       color: white;
       border: none;
-      padding: 15px 35px;
-      font-size: 1.1rem;
+      padding: 16px 40px;
+      font-size: 1.15rem;
       font-weight: bold;
       border-radius: 50px;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(123, 44, 191, 0.5);
+      box-shadow: 0 6px 20px rgba(157, 78, 221, 0.55);
+      transition: transform 0.15s;
+    }
+    .btn-primary:active { transform: scale(0.95); }
+
+    /* PANTALLA DE JUEGO */
+    #game-screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 420px;
+      gap: 12px;
+    }
+    .top-bar {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.07);
+      padding: 10px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .stat-box { display: flex; flex-direction: column; align-items: center; }
+    .stat-label { font-size: 0.7rem; color: #b8b0d8; text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-value { font-size: 1.1rem; font-weight: bold; color: #ffd166; }
+    .btn-small {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    /* BARRA DE EVOLUCIÓN */
+    .evo-guide {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 8px 10px;
+      border-radius: 14px;
+      font-size: 0.78rem;
+      color: #d8d2f0;
+      text-align: center;
+    }
+    .evo-chain {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      margin-top: 4px;
+      font-size: 1.1rem;
+      flex-wrap: wrap;
+    }
+
+    /* TABLERO 4x4 */
+    .board {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: rgba(16, 12, 36, 0.85);
+      padding: 12px;
+      border-radius: 22px;
+      border: 2px solid rgba(157, 78, 221, 0.35);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    .cell {
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: transform 0.12s, border-color 0.15s, background 0.15s;
+    }
+    .cell.has-item {
+      background: radial-gradient(circle, rgba(123, 44, 191, 0.35), rgba(36, 20, 69, 0.8));
+      border-color: rgba(199, 125, 255, 0.35);
+    }
+    .cell.selected {
+      border-color: #ffd166;
+      background: radial-gradient(circle, rgba(255, 209, 102, 0.3), rgba(58, 12, 163, 0.8));
+      transform: scale(1.06);
+      box-shadow: 0 0 15px rgba(255, 209, 102, 0.5);
+    }
+    .item-emoji { font-size: 2.1rem; line-height: 1; }
+    .item-lvl {
+      position: absolute;
+      bottom: 4px;
+      right: 6px;
+      font-size: 0.65rem;
+      font-weight: bold;
+      background: rgba(0, 0, 0, 0.55);
+      padding: 1px 5px;
+      border-radius: 8px;
+      color: #e0aaff;
+    }
+
+    /* CONTROLES INFERIORES */
+    .controls {
+      width: 100%;
+      display: flex;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .btn-spawn {
+      flex: 1;
+      background: linear-gradient(135deg, #00b4d8, #0077b6);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 16px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 180, 216, 0.4);
+    }
+    .btn-spawn:active { transform: scale(0.97); }
+    .btn-collect {
+      background: linear-gradient(135deg, #f77f00, #d62828);
+      color: white;
+      border: none;
+      padding: 14px 16px;
+      border-radius: 16px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .toast {
+      min-height: 22px;
+      font-size: 0.88rem;
+      color: #80ffdb;
+      text-align: center;
+      font-weight: 500;
     }
   </style>
 </head>
 <body>
 
-  <img src="icon-512.png" alt="Fusión Cósmica">
-  <h1>🌌 Fusión Cósmica</h1>
-  <p>Explora el cosmos, recolecta cristales elementales y fusiona adorables mascotas estelares.</p>
-  <button onclick="alert('¡Bienvenido al Altar de Fusión!')">Jugar Ahora</button>
+  <!-- PORTADA -->
+  <div id="start-screen">
+    <img class="cover-img" src="icon-512.png" alt="Fusión Cósmica">
+    <h1>🌌 Fusión Cósmica</h1>
+    <p class="subtitle">Tocá dos cristales o mascotas iguales para fusionarlos, descubrir criaturas estelares y acumular energía cósmica.</p>
+    <button class="btn-primary" onclick="startGame()">Jugar Ahora</button>
+  </div>
+
+  <!-- TABLERO DEL JUEGO -->
+  <div id="game-screen">
+    <div class="top-bar">
+      <button class="btn-small" onclick="goHome()">← Inicio</button>
+      <div class="stat-box">
+        <span class="stat-label">Puntos</span>
+        <span class="stat-value" id="score-val">0</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-label">Energía</span>
+        <span class="stat-value" id="energy-val">100</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-label">Récord</span>
+        <span class="stat-value" id="best-val">0</span>
+      </div>
+    </div>
+
+    <div class="evo-guide">
+      <div>Tocá dos piezas iguales para evolucionarlas:</div>
+      <div class="evo-chain">🔹→💎→🔮→🥚→🐣→🐱→🦊→🐉→🦄→👑</div>
+    </div>
+
+    <div class="board" id="board"></div>
+
+    <div class="toast" id="toast">Tocá "Invocar Cristal" para empezar</div>
+
+    <div class="controls">
+      <button class="btn-spawn" onclick="spawnCrystal()">✨ Invocar Cristal (-10 ⚡)</button>
+      <button class="btn-collect" onclick="rechargeEnergy()">⚡ +50</button>
+    </div>
+  </div>
 
   <script>
+    const ITEMS = [
+      { emoji: '🔹', name: 'Fragmento Estelar', pts: 10 },
+      { emoji: '💎', name: 'Cristal Puro', pts: 25 },
+      { emoji: '🔮', name: 'Orbe Cósmico', pts: 60 },
+      { emoji: '🥚', name: 'Huevo Galáctico', pts: 150 },
+      { emoji: '🐣', name: 'Cría Astral', pts: 350 },
+      { emoji: '🐱', name: 'Gato Nebulosa', pts: 800 },
+      { emoji: '🦊', name: 'Zorro Solar', pts: 1800 },
+      { emoji: '🐉', name: 'Dragón Estelar', pts: 4000 },
+      { emoji: '🦄', name: 'Unicornio Cosmos', pts: 9000 },
+      { emoji: '👑', name: 'Deidad Suprema', pts: 20000 }
+    ];
+
+    let grid = Array(16).fill(null);
+    let selectedIndex = null;
+    let score = 0;
+    let energy = 100;
+    let bestScore = parseInt(localStorage.getItem('fc_best') || '0', 10);
+
+    function loadSave() {
+      try {
+        const saved = JSON.parse(localStorage.getItem('fc_save'));
+        if (saved && Array.isArray(saved.grid) && saved.grid.length === 16) {
+          grid = saved.grid;
+          score = saved.score || 0;
+          energy = typeof saved.energy === 'number' ? saved.energy : 100;
+        } else {
+          grid[0] = 0;
+          grid[1] = 0;
+        }
+      } catch (e) {
+        grid[0] = 0;
+        grid[1] = 0;
+      }
+    }
+
+    function saveGame() {
+      if (score > bestScore) {
+        bestScore = score;
+        localStorage.setItem('fc_best', bestScore);
+      }
+      localStorage.setItem('fc_save', JSON.stringify({ grid, score, energy }));
+    }
+
+    function startGame() {
+      document.getElementById('start-screen').style.display = 'none';
+      document.getElementById('game-screen').style.display = 'flex';
+      loadSave();
+      render();
+    }
+
+    function goHome() {
+      document.getElementById('game-screen').style.display = 'none';
+      document.getElementById('start-screen').style.display = 'flex';
+    }
+
+    function showToast(msg) {
+      document.getElementById('toast').textContent = msg;
+    }
+
+    function render() {
+      document.getElementById('score-val').textContent = score;
+      document.getElementById('energy-val').textContent = energy;
+      document.getElementById('best-val').textContent = bestScore;
+
+      const boardEl = document.getElementById('board');
+      boardEl.innerHTML = '';
+
+      grid.forEach((level, idx) => {
+        const cell = document.createElement('div');
+        cell.className = 'cell' + (level !== null ? ' has-item' : '') + (selectedIndex === idx ? ' selected' : '');
+        cell.onclick = () => onCellClick(idx);
+
+        if (level !== null && ITEMS[level]) {
+          cell.innerHTML = `<span class="item-emoji">${ITEMS[level].emoji}</span><span class="item-lvl">Nv.${level + 1}</span>`;
+        }
+        boardEl.appendChild(cell);
+      });
+    }
+
+    function onCellClick(idx) {
+      if (selectedIndex === null) {
+        if (grid[idx] !== null) {
+          selectedIndex = idx;
+          showToast(`Seleccionado: ${ITEMS[grid[idx]].name}`);
+          render();
+        }
+        return;
+      }
+
+      if (selectedIndex === idx) {
+        selectedIndex = null;
+        showToast('Selección cancelada');
+        render();
+        return;
+      }
+
+      // Si destino está vacío: mover pieza
+      if (grid[idx] === null) {
+        grid[idx] = grid[selectedIndex];
+        grid[selectedIndex] = null;
+        selectedIndex = null;
+        saveGame();
+        render();
+        return;
+      }
+
+      // Si son del mismo nivel: FUSIONAR
+      if (grid[idx] === grid[selectedIndex]) {
+        const currentLvl = grid[idx];
+        if (currentLvl < ITEMS.length - 1) {
+          const nextLvl = currentLvl + 1;
+          grid[idx] = nextLvl;
+          grid[selectedIndex] = null;
+          selectedIndex = null;
+          score += ITEMS[nextLvl].pts;
+          energy += 5;
+          showToast(`✨ ¡Fusión! Creaste: ${ITEMS[nextLvl].name} (+${ITEMS[nextLvl].pts} pts)`);
+        } else {
+          // Nivel máximo: cosechar por gran bono
+          grid[idx] = null;
+          grid[selectedIndex] = null;
+          selectedIndex = null;
+          score += 50000;
+          energy += 50;
+          showToast('👑 ¡Fusión Suprema! +50.000 pts y +50 ⚡');
+        }
+        saveGame();
+        render();
+        return;
+      }
+
+      // Si es distinto nivel: cambiar selección
+      selectedIndex = idx;
+      showToast(`Seleccionado: ${ITEMS[grid[idx]].name}`);
+      render();
+    }
+
+    function spawnCrystal() {
+      if (energy < 10) {
+        showToast('Sin energía suficiente. Tocá el botón ⚡ +50');
+        return;
+      }
+      const emptyCells = grid.map((v, i) => v === null ? i : null).filter(v => v !== null);
+      if (emptyCells.length === 0) {
+        showToast('¡Tablero lleno! Fusioná dos piezas iguales');
+        return;
+      }
+      const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+      grid[randomCell] = Math.random() < 0.8 ? 0 : 1;
+      energy -= 10;
+      selectedIndex = null;
+      showToast(`Apareció: ${ITEMS[grid[randomCell]].name}`);
+      saveGame();
+      render();
+    }
+
+    function rechargeEnergy() {
+      energy += 50;
+      showToast('⚡ +50 de Energía Cósmica recargada');
+      saveGame();
+      render();
+    }
+
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js');
     }
