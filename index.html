@@ -1,427 +1,1253 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0d0b26" />
   <title>Fusión Cósmica: Mascotas & Cristales</title>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#1a103c">
+  <link rel="manifest" href="manifest.json" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; user-select: none; -webkit-tap-highlight-color: transparent; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
     body {
-      background: radial-gradient(circle at top, #1d1145, #090a1a);
+      background: radial-gradient(circle at 50% 20%, #1d154a 0%, #0d0b26 55%, #070616 100%);
       color: #ffffff;
-      min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
-      overflow-x: hidden;
-      padding: 16px;
+      align-items: center;
+      overflow: hidden;
     }
 
-    /* PANTALLA DE INICIO */
-    #start-screen {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      max-width: 420px;
+    .app-container {
       width: 100%;
-    }
-    .cover-emblem {
-      width: 170px;
-      height: 170px;
-      border-radius: 32px;
-      background: radial-gradient(circle at 30% 30%, #9d4edd, #3c096c 70%, #10002b);
-      box-shadow: 0 0 35px rgba(157, 78, 221, 0.75), inset 0 0 20px rgba(255, 255, 255, 0.25);
-      border: 2px solid rgba(224, 170, 255, 0.45);
+      max-width: 410px;
+      height: 100dvh;
+      max-height: 820px;
+      padding: 10px 12px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 22px;
-      position: relative;
+      justify-content: space-between;
+      gap: 8px;
     }
-    .emblem-icons {
-      font-size: 3.4rem;
-      line-height: 1.1;
-      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
-    }
-    .emblem-sub {
-      font-size: 0.75rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #ffd166;
-      font-weight: bold;
-      margin-top: 6px;
-    }
-    h1 { font-size: 1.9rem; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(157, 78, 221, 0.6); }
-    .subtitle { color: #cfc9e8; margin-bottom: 28px; line-height: 1.5; font-size: 0.98rem; }
-    .btn-primary {
-      background: linear-gradient(135deg, #9d4edd, #5a189a);
-      color: white;
-      border: none;
-      padding: 16px 40px;
-      font-size: 1.15rem;
-      font-weight: bold;
-      border-radius: 50px;
-      cursor: pointer;
-      box-shadow: 0 6px 20px rgba(157, 78, 221, 0.55);
-      transition: transform 0.15s;
-    }
-    .btn-primary:active { transform: scale(0.95); }
 
-    /* PANTALLA DE JUEGO */
-    #game-screen {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      max-width: 420px;
-      gap: 12px;
-    }
+    /* Header */
     .top-bar {
-      width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(255, 255, 255, 0.07);
-      padding: 10px 14px;
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      gap: 6px;
     }
-    .stat-box { display: flex; flex-direction: column; align-items: center; }
-    .stat-label { font-size: 0.7rem; color: #b8b0d8; text-transform: uppercase; letter-spacing: 0.5px; }
-    .stat-value { font-size: 1.1rem; font-weight: bold; color: #ffd166; }
-    .btn-small {
-      background: rgba(255, 255, 255, 0.12);
-      color: #fff;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 12px;
-      font-size: 0.85rem;
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
+      flex-shrink: 0;
+    }
+
+    .title-wrap h1 {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      line-height: 1.1;
+    }
+
+    .theme-select {
+      margin-top: 3px;
+      background: rgba(24, 20, 62, 0.9);
+      color: #e9d5ff;
+      border: 1px solid #8b5cf6;
+      border-radius: 999px;
+      padding: 2px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      outline: none;
       cursor: pointer;
     }
 
-    /* BARRA DE EVOLUCIÓN */
-    .evo-guide {
-      width: 100%;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 8px 10px;
-      border-radius: 14px;
-      font-size: 0.78rem;
-      color: #d8d2f0;
-      text-align: center;
-    }
-    .evo-chain {
+    .header-actions {
       display: flex;
-      justify-content: center;
-      gap: 4px;
-      margin-top: 4px;
-      font-size: 1.1rem;
-      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
     }
 
-    /* TABLERO 4x4 */
-    .board {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      background: rgba(16, 12, 36, 0.85);
-      padding: 12px;
-      border-radius: 22px;
-      border: 2px solid rgba(157, 78, 221, 0.35);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    .btn-pill {
+      background: linear-gradient(180deg, #312a75 0%, #201b52 100%);
+      border: 1px solid #4c42a6;
+      color: #fbbf24;
+      border-radius: 999px;
+      padding: 6px 11px;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
     }
-    .cell {
-      background: rgba(255, 255, 255, 0.06);
+
+    .btn-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #312a75 0%, #201b52 100%);
+      border: 1px solid #4c42a6;
+      color: #ffffff;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    /* Scoreboard */
+    .score-panel {
+      background: rgba(16, 14, 44, 0.85);
+      border: 1px solid rgba(124, 58, 237, 0.45);
       border-radius: 16px;
+      padding: 8px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .scores-left {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .score-box {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .score-label {
+      font-size: 9px;
+      font-weight: 700;
+      color: #94a3b8;
+      letter-spacing: 0.6px;
+    }
+
+    .score-value {
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .record-value {
+      color: #facc15;
+    }
+
+    .next-box {
+      background: rgba(10, 9, 28, 0.9);
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      border-radius: 12px;
+      padding: 4px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .next-box span {
+      font-size: 10px;
+      font-weight: 800;
+      color: #cbd5e1;
+    }
+
+    #nextCanvas {
+      width: 28px;
+      height: 28px;
+      display: block;
+    }
+
+    /* Game Arena */
+    .arena-wrapper {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      border-radius: 20px;
+      border: 2px solid rgba(139, 92, 246, 0.55);
+      box-shadow: 0 0 22px rgba(109, 40, 217, 0.35), inset 0 0 30px rgba(15, 10, 45, 0.9);
+      background: radial-gradient(circle at 50% 35%, #1c1646 0%, #100c2b 75%, #0b0820 100%);
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    #gameCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .toast-banner {
+      position: absolute;
+      top: 76px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 12, 41, 0.92);
+      border: 1px solid #f59e0b;
+      color: #fde68a;
+      padding: 5px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      white-space: nowrap;
+      z-index: 5;
+    }
+
+    .toast-banner.show {
+      opacity: 1;
+    }
+
+    /* Powerups */
+    .powerups-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .power-btn {
+      position: relative;
+      background: linear-gradient(180deg, #2b246b 0%, #1b1647 100%);
+      border: 1px solid #4c42a6;
+      border-radius: 14px;
+      padding: 7px 4px;
+      color: #ffffff;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      position: relative;
+      gap: 2px;
       cursor: pointer;
-      border: 2px solid transparent;
-      transition: transform 0.12s, border-color 0.15s, background 0.15s;
+      transition: transform 0.1s ease, opacity 0.2s;
     }
-    .cell.has-item {
-      background: radial-gradient(circle, rgba(123, 44, 191, 0.35), rgba(36, 20, 69, 0.8));
-      border-color: rgba(199, 125, 255, 0.35);
+
+    .power-btn:active {
+      transform: scale(0.96);
     }
-    .cell.selected {
-      border-color: #ffd166;
-      background: radial-gradient(circle, rgba(255, 209, 102, 0.3), rgba(58, 12, 163, 0.8));
-      transform: scale(1.06);
-      box-shadow: 0 0 15px rgba(255, 209, 102, 0.5);
+
+    .power-btn.disabled {
+      opacity: 0.45;
+      filter: grayscale(0.6);
     }
-    .item-emoji { font-size: 2.1rem; line-height: 1; }
-    .item-lvl {
+
+    .power-icon {
+      font-size: 18px;
+    }
+
+    .power-label {
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .power-badge {
       position: absolute;
-      bottom: 4px;
-      right: 6px;
-      font-size: 0.65rem;
-      font-weight: bold;
-      background: rgba(0, 0, 0, 0.55);
-      padding: 1px 5px;
-      border-radius: 8px;
-      color: #e0aaff;
-    }
-
-    /* CONTROLES INFERIORES */
-    .controls {
-      width: 100%;
+      top: -5px;
+      right: -3px;
+      width: 19px;
+      height: 19px;
+      border-radius: 50%;
+      background: #facc15;
+      color: #111827;
+      font-size: 11px;
+      font-weight: 900;
       display: flex;
-      gap: 10px;
-      margin-top: 4px;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     }
-    .btn-spawn {
-      flex: 1;
-      background: linear-gradient(135deg, #00b4d8, #0077b6);
-      color: white;
+
+    /* AdMob Banner */
+    .admob-bar {
+      background: rgba(15, 13, 38, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 10px;
+      padding: 6px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+    }
+
+    .admob-bar.hidden {
+      display: none;
+    }
+
+    .ad-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #cbd5e1;
+    }
+
+    .ad-tag {
+      background: #f59e0b;
+      color: #0f172a;
+      font-weight: 900;
+      font-size: 9px;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+
+    .ad-remove {
+      color: #facc15;
+      font-weight: 700;
+      text-decoration: underline;
+      background: none;
       border: none;
-      padding: 14px;
-      border-radius: 16px;
-      font-size: 1rem;
-      font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0, 180, 216, 0.4);
+      font-size: 11px;
     }
-    .btn-spawn:active { transform: scale(0.97); }
-    .btn-collect {
-      background: linear-gradient(135deg, #f77f00, #d62828);
-      color: white;
+
+    /* Modals */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(6, 5, 18, 0.82);
+      backdrop-filter: blur(4px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      z-index: 50;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 350px;
+      background: linear-gradient(180deg, #1b1745 0%, #110e2e 100%);
+      border: 1.5px solid #f59e0b;
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .modal-header h2 {
+      font-size: 17px;
+      color: #facc15;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .close-modal {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
       border: none;
-      padding: 14px 16px;
-      border-radius: 16px;
-      font-size: 0.9rem;
-      font-weight: bold;
+      color: #ffffff;
+      font-size: 15px;
       cursor: pointer;
     }
 
-    .toast {
-      min-height: 22px;
-      font-size: 0.88rem;
-      color: #80ffdb;
-      text-align: center;
-      font-weight: 500;
+    .modal-desc {
+      font-size: 12px;
+      color: #cbd5e1;
+      margin-bottom: 14px;
+      line-height: 1.4;
+    }
+
+    .shop-item {
+      background: rgba(12, 10, 34, 0.85);
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .shop-info h3 {
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+
+    .shop-info p {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    .price-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 11px;
+      font-weight: 900;
+      color: #ffffff;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .price-green {
+      background: #10b981;
+    }
+
+    .price-orange {
+      background: #f59e0b;
+      color: #111827;
+    }
+
+    .modal-primary-btn {
+      width: 100%;
+      margin-top: 6px;
+      padding: 10px;
+      border-radius: 12px;
+      border: 1px solid #4c42a6;
+      background: #282263;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .evo-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .evo-cell {
+      background: rgba(12, 10, 34, 0.85);
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      border-radius: 10px;
+      padding: 6px 2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .evo-cell span {
+      font-size: 9px;
+      color: #cbd5e1;
+      font-weight: 700;
     }
   </style>
 </head>
 <body>
-
-  <!-- PORTADA -->
-  <div id="start-screen">
-    <div class="cover-emblem">
-      <div class="emblem-icons">🐉💎</div>
-      <div class="emblem-sub">Altar Estelar</div>
+  <div class="app-container">
+    <!-- Top Header -->
+    <div class="top-bar">
+      <div class="brand-group">
+        <div class="logo-badge">✨</div>
+        <div class="title-wrap">
+          <h1>Fusión Cósmica</h1>
+          <select id="themeSelect" class="theme-select" aria-label="Seleccionar tema">
+            <option value="mascotas">🐾 Mascotas Cósmicas</option>
+            <option value="cristales">💎 Cristales Mágicos</option>
+            <option value="gotas">💧 Gotas Elementales</option>
+            <option value="frutas">🍓 Frutas Estelares</option>
+          </select>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="openShopBtn" class="btn-pill">🛒 Tienda</button>
+        <button id="openGuideBtn" class="btn-circle" title="Guía de evolución">📖</button>
+        <button id="soundBtn" class="btn-circle" title="Sonido">🔊</button>
+      </div>
     </div>
-    <h1>🌌 Fusión Cósmica</h1>
-    <p class="subtitle">Tocá dos cristales o mascotas iguales para fusionarlos, descubrir criaturas estelares y acumular energía cósmica.</p>
-    <button class="btn-primary" onclick="startGame()">Jugar Ahora</button>
+
+    <!-- Score & Next Piece -->
+    <div class="score-panel">
+      <div class="scores-left">
+        <div class="score-box">
+          <span class="score-label">PUNTOS</span>
+          <span id="scoreVal" class="score-value">0</span>
+        </div>
+        <div class="score-box">
+          <span class="score-label">RÉCORD</span>
+          <span id="bestVal" class="score-value record-value">0</span>
+        </div>
+      </div>
+      <div class="next-box">
+        <span>SIGUE</span>
+        <canvas id="nextCanvas" width="56" height="56"></canvas>
+      </div>
+    </div>
+
+    <!-- Physics Arena -->
+    <div class="arena-wrapper" id="arenaWrapper">
+      <div id="toastBanner" class="toast-banner">🎨 Tema: Mascotas Cósmicas</div>
+      <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <!-- Power-ups -->
+    <div class="powerups-row">
+      <button id="btnShake" class="power-btn">
+        <span class="power-badge" id="badgeShake">2</span>
+        <span class="power-icon">😵</span>
+        <span class="power-label">Sacudir</span>
+      </button>
+      <button id="btnRemoveSmall" class="power-btn">
+        <span class="power-badge" id="badgeSmall">2</span>
+        <span class="power-icon">🪄</span>
+        <span class="power-label">Quitar Chica</span>
+      </button>
+      <button id="btnEvolve" class="power-btn">
+        <span class="power-badge" id="badgeEvolve">2</span>
+        <span class="power-icon">⬆️</span>
+        <span class="power-label">Evolucionar</span>
+      </button>
+    </div>
+
+    <!-- AdMob Banner -->
+    <div id="admobBar" class="admob-bar">
+      <div class="ad-left">
+        <span class="ad-tag">ANUNCIO</span>
+        <span>Espacio Banner AdMob (320x50)</span>
+      </div>
+      <button id="removeAdLink" class="ad-remove">Quitar</button>
+    </div>
   </div>
 
-  <!-- TABLERO DEL JUEGO -->
-  <div id="game-screen">
-    <div class="top-bar">
-      <button class="btn-small" onclick="goHome()">← Inicio</button>
-      <div class="stat-box">
-        <span class="stat-label">Puntos</span>
-        <span class="stat-value" id="score-val">0</span>
+  <!-- Modal Tienda Cósmica -->
+  <div id="shopModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>🛒 Tienda Cósmica</h2>
+        <button class="close-modal" data-close="shopModal">✕</button>
       </div>
-      <div class="stat-box">
-        <span class="stat-label">Energía</span>
-        <span class="stat-value" id="energy-val">100</span>
+      <p class="modal-desc">Personalizá tu experiencia o conseguí comodines extra para superar tu récord.</p>
+
+      <div class="shop-item">
+        <div class="shop-info">
+          <h3>🚫 Quitar Anuncios</h3>
+          <p>Elimina el banner inferior para siempre</p>
+        </div>
+        <button id="buyNoAdsBtn" class="price-btn price-green">USD 1.99</button>
       </div>
-      <div class="stat-box">
-        <span class="stat-label">Récord</span>
-        <span class="stat-value" id="best-val">0</span>
+
+      <div class="shop-item">
+        <div class="shop-info">
+          <h3>🎁 Pack 5 Comodines</h3>
+          <p>+5 Sacudir, +5 Quitar Chica y +5 Evolucionar</p>
+        </div>
+        <button id="buyPackBtn" class="price-btn price-orange">USD 0.99</button>
       </div>
+
+      <button class="modal-primary-btn" data-close="shopModal">Volver al Juego</button>
     </div>
+  </div>
 
-    <div class="evo-guide">
-      <div>Tocá dos piezas iguales para evolucionarlas:</div>
-      <div class="evo-chain">🔹→💎→🔮→🥚→🐣→🐱→🦊→🐉→🦄→👑</div>
+  <!-- Modal Guía de Evolución -->
+  <div id="guideModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>📖 Cadena de Evolución</h2>
+        <button class="close-modal" data-close="guideModal">✕</button>
+      </div>
+      <p class="modal-desc">Uní dos figuras iguales para fusionarlas y descubrir la siguiente evolución cósmica.</p>
+      <div id="evoGrid" class="evo-grid"></div>
+      <button class="modal-primary-btn" data-close="guideModal">¡Entendido!</button>
     </div>
+  </div>
 
-    <div class="board" id="board"></div>
-
-    <div class="toast" id="toast">Tocá "Invocar Cristal" para empezar</div>
-
-    <div class="controls">
-      <button class="btn-spawn" onclick="spawnCrystal()">✨ Invocar Cristal (-10 ⚡)</button>
-      <button class="btn-collect" onclick="rechargeEnergy()">⚡ +50</button>
+  <!-- Modal Game Over -->
+  <div id="gameOverModal" class="modal-overlay">
+    <div class="modal-card" style="text-align: center;">
+      <div class="modal-header" style="justify-content: center;">
+        <h2>🌌 ¡Tablero Lleno!</h2>
+      </div>
+      <p class="modal-desc">Las figuras superaron la línea límite.<br><strong id="finalScoreText" style="color:#fff; font-size:16px;">Puntos: 0</strong></p>
+      <button id="restartBtn" class="modal-primary-btn" style="background: linear-gradient(135deg,#8b5cf6,#ec4899); border:none;">Jugar de Nuevo</button>
     </div>
   </div>
 
   <script>
-    const ITEMS = [
-      { emoji: '🔹', name: 'Fragmento Estelar', pts: 10 },
-      { emoji: '💎', name: 'Cristal Puro', pts: 25 },
-      { emoji: '🔮', name: 'Orbe Cósmico', pts: 60 },
-      { emoji: '🥚', name: 'Huevo Galáctico', pts: 150 },
-      { emoji: '🐣', name: 'Cría Astral', pts: 350 },
-      { emoji: '🐱', name: 'Gato Nebulosa', pts: 800 },
-      { emoji: '🦊', name: 'Zorro Solar', pts: 1800 },
-      { emoji: '🐉', name: 'Dragón Estelar', pts: 4000 },
-      { emoji: '🦄', name: 'Unicornio Cosmos', pts: 9000 },
-      { emoji: '👑', name: 'Deidad Suprema', pts: 20000 }
+    // Registro PWA Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+
+    const { Engine, World, Bodies, Body, Events } = Matter;
+
+    const LEVELS = [
+      { radius: 15, c1: '#f9a8d4', c2: '#db2777', ear: 'round', crown: false, leaf: false, sides: 5, points: 2 },
+      { radius: 21, c1: '#bae6fd', c2: '#0284c7', ear: 'cat',   crown: false, leaf: false, sides: 6, points: 4 },
+      { radius: 28, c1: '#fde047', c2: '#d97706', ear: 'cat',   crown: false, leaf: false, sides: 6, points: 8 },
+      { radius: 35, c1: '#fdba74', c2: '#ea580c', ear: 'cat',   crown: false, leaf: true,  sides: 7, points: 16 },
+      { radius: 43, c1: '#6ee7b7', c2: '#059669', ear: 'round', crown: false, leaf: true,  sides: 8, points: 32 },
+      { radius: 52, c1: '#d8b4fe', c2: '#7e22ce', ear: 'bunny', crown: false, leaf: true,  sides: 8, points: 64 },
+      { radius: 62, c1: '#7dd3fc', c2: '#1d4ed8', ear: 'cat',   crown: true,  leaf: true,  sides: 9, points: 128 },
+      { radius: 73, c1: '#fda4af', c2: '#be123c', ear: 'bunny', crown: true,  leaf: true,  sides: 10, points: 256 },
+      { radius: 85, c1: '#a7f3d0', c2: '#047857', ear: 'cat',   crown: true,  leaf: true,  sides: 12, points: 512 },
+      { radius: 98, c1: '#fef08a', c2: '#ca8a04', ear: 'bunny', crown: true,  leaf: true,  sides: 12, points: 1024 }
     ];
 
-    let grid = Array(16).fill(null);
-    let selectedIndex = null;
-    let score = 0;
-    let energy = 100;
-    let bestScore = parseInt(localStorage.getItem('fc_best') || '0', 10);
+    const THEME_NAMES = {
+      mascotas: 'Mascotas Cósmicas',
+      cristales: 'Cristales Mágicos',
+      gotas: 'Gotas Elementales',
+      frutas: 'Frutas Estelares'
+    };
 
-    function loadSave() {
-      try {
-        const saved = JSON.parse(localStorage.getItem('fc_save'));
-        if (saved && Array.isArray(saved.grid) && saved.grid.length === 16) {
-          grid = saved.grid;
-          score = saved.score || 0;
-          energy = typeof saved.energy === 'number' ? saved.energy : 100;
-        } else {
-          grid[0] = 0;
-          grid[1] = 0;
-        }
-      } catch (e) {
-        grid[0] = 0;
-        grid[1] = 0;
+    let currentTheme = localStorage.getItem('fc_theme') || 'mascotas';
+    let score = 0;
+    let bestScore = parseInt(localStorage.getItem('fc_best') || '0', 10);
+    let soundOn = true;
+    let adsRemoved = localStorage.getItem('fc_noads') === '1';
+
+    let powers = {
+      shake: parseInt(localStorage.getItem('fc_p_shake') ?? '2', 10),
+      small: parseInt(localStorage.getItem('fc_p_small') ?? '2', 10),
+      evolve: parseInt(localStorage.getItem('fc_p_evolve') ?? '2', 10)
+    };
+
+    const arenaWrapper = document.getElementById('arenaWrapper');
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const nextCanvas = document.getElementById('nextCanvas');
+    const nextCtx = nextCanvas.getContext('2d');
+
+    let W = 360;
+    let H = 520;
+    let dangerY = 78;
+    let dropY = 38;
+    let pointerX = 180;
+    let currentLevel = 0;
+    let nextLevel = 1;
+    let canDrop = true;
+    let isGameOver = false;
+    let particles = [];
+    let stars = [];
+
+    // Audio Synthesizer
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playTone(freq, type = 'sine', duration = 0.12, vol = 0.12) {
+      if (!soundOn) return;
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(freq * 1.35, audioCtx.currentTime + duration);
+      gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    }
+
+    // Physics Engine
+    const engine = Engine.create();
+    engine.gravity.y = 1.15;
+    let walls = [];
+
+    function setupDimensions() {
+      const rect = arenaWrapper.getBoundingClientRect();
+      W = rect.width;
+      H = rect.height;
+      canvas.width = W * window.devicePixelRatio;
+      canvas.height = H * window.devicePixelRatio;
+      ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
+      pointerX = W / 2;
+
+      stars = Array.from({ length: 24 }, () => ({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.4 + 0.5,
+        a: Math.random() * 0.5 + 0.15
+      }));
+
+      if (walls.length) World.remove(engine.world, walls);
+      const thick = 60;
+      walls = [
+        Bodies.rectangle(W / 2, H + thick / 2 - 2, W + 100, thick, { isStatic: true, friction: 0.4, restitution: 0.2 }),
+        Bodies.rectangle(-thick / 2 + 2, H / 2, thick, H * 2, { isStatic: true, friction: 0.2 }),
+        Bodies.rectangle(W + thick / 2 - 2, H / 2, thick, H * 2, { isStatic: true, friction: 0.2 })
+      ];
+      World.add(engine.world, walls);
+    }
+
+    function randomStartLevel() {
+      return Math.floor(Math.random() * 4);
+    }
+
+    function createOrbBody(x, y, level) {
+      const def = LEVELS[level];
+      const body = Bodies.circle(x, y, def.radius, {
+        restitution: 0.22,
+        friction: 0.35,
+        frictionAir: 0.008,
+        density: 0.0015 + level * 0.0002
+      });
+      body.gameLevel = level;
+      body.spawnTime = Date.now();
+      body.merging = false;
+      return body;
+    }
+
+    function spawnParticles(x, y, color) {
+      for (let i = 0; i < 14; i++) {
+        const ang = (Math.PI * 2 * i) / 14 + Math.random() * 0.3;
+        const spd = 1.5 + Math.random() * 3.5;
+        particles.push({
+          x, y,
+          vx: Math.cos(ang) * spd,
+          vy: Math.sin(ang) * spd,
+          r: 2.5 + Math.random() * 3,
+          color,
+          life: 1
+        });
       }
     }
 
-    function saveGame() {
+    // Drawing Pieces by Theme
+    function drawPiece(c, x, y, level, angle = 0, theme = currentTheme) {
+      const def = LEVELS[level];
+      const r = def.radius;
+      c.save();
+      c.translate(x, y);
+      c.rotate(angle);
+
+      if (theme === 'cristales') {
+        // Polygon Gem
+        const sides = def.sides;
+        const grad = c.createRadialGradient(-r * 0.3, -r * 0.3, r * 0.1, 0, 0, r);
+        grad.addColorStop(0, '#ffffff');
+        grad.addColorStop(0.25, def.c1);
+        grad.addColorStop(1, def.c2);
+
+        c.beginPath();
+        for (let i = 0; i < sides; i++) {
+          const a = (i * 2 * Math.PI) / sides - Math.PI / 2;
+          const px = Math.cos(a) * r;
+          const py = Math.sin(a) * r;
+          if (i === 0) c.moveTo(px, py);
+          else c.lineTo(px, py);
+        }
+        c.closePath();
+        c.fillStyle = grad;
+        c.fill();
+        c.lineWidth = 2;
+        c.strokeStyle = 'rgba(255,255,255,0.75)';
+        c.stroke();
+
+        // Inner Facet
+        c.beginPath();
+        for (let i = 0; i < sides; i++) {
+          const a = (i * 2 * Math.PI) / sides - Math.PI / 2;
+          const px = Math.cos(a) * (r * 0.56);
+          const py = Math.sin(a) * (r * 0.56);
+          if (i === 0) c.moveTo(px, py);
+          else c.lineTo(px, py);
+        }
+        c.closePath();
+        c.fillStyle = 'rgba(255, 255, 255, 0.22)';
+        c.fill();
+
+        // Specular dot
+        c.beginPath();
+        c.arc(-r * 0.26, -r * 0.26, r * 0.13, 0, Math.PI * 2);
+        c.fillStyle = 'rgba(255,255,255,0.85)';
+        c.fill();
+      } else {
+        // Mascotas, Gotas, Frutas base sphere
+        if (theme === 'mascotas') {
+          c.fillStyle = def.c2;
+          c.strokeStyle = 'rgba(255,255,255,0.5)';
+          c.lineWidth = 1.5;
+          if (def.ear === 'cat') {
+            // Left & right pointy ears
+            [-1, 1].forEach(dir => {
+              c.beginPath();
+              c.moveTo(dir * r * 0.35, -r * 0.72);
+              c.lineTo(dir * r * 0.85, -r * 1.05);
+              c.lineTo(dir * r * 0.88, -r * 0.42);
+              c.closePath();
+              c.fill();
+              c.stroke();
+            });
+          } else if (def.ear === 'bunny') {
+            [-1, 1].forEach(dir => {
+              c.beginPath();
+              c.ellipse(dir * r * 0.45, -r * 0.95, r * 0.2, r * 0.42, dir * 0.25, 0, Math.PI * 2);
+              c.fill();
+              c.stroke();
+            });
+          } else {
+            [-1, 1].forEach(dir => {
+              c.beginPath();
+              c.arc(dir * r * 0.68, -r * 0.68, r * 0.26, 0, Math.PI * 2);
+              c.fill();
+              c.stroke();
+            });
+          }
+        }
+
+        // Main glossy gradient circle
+        const grad = c.createRadialGradient(-r * 0.32, -r * 0.35, r * 0.08, 0, 0, r);
+        grad.addColorStop(0, '#ffffff');
+        grad.addColorStop(0.28, def.c1);
+        grad.addColorStop(0.85, def.c2);
+        grad.addColorStop(1, '#1e1b4b');
+
+        c.beginPath();
+        c.arc(0, 0, r, 0, Math.PI * 2);
+        c.fillStyle = grad;
+        c.fill();
+        c.lineWidth = 1.6;
+        c.strokeStyle = 'rgba(255,255,255,0.45)';
+        c.stroke();
+
+        // Top gloss reflection
+        c.beginPath();
+        c.ellipse(-r * 0.32, -r * 0.38, r * 0.24, r * 0.13, -0.6, 0, Math.PI * 2);
+        c.fillStyle = 'rgba(255,255,255,0.65)';
+        c.fill();
+
+        if (theme === 'frutas') {
+          // Seeds
+          c.fillStyle = 'rgba(30, 27, 75, 0.55)';
+          const seeds = [[-0.35, -0.1], [0.32, -0.15], [0, 0.22], [-0.25, 0.42], [0.28, 0.38]];
+          seeds.forEach(([sx, sy]) => {
+            c.beginPath();
+            c.ellipse(sx * r, sy * r, r * 0.06, r * 0.1, 0.2, 0, Math.PI * 2);
+            c.fill();
+          });
+          // Green leaf
+          if (def.leaf || level >= 1) {
+            c.fillStyle = '#22c55e';
+            c.beginPath();
+            c.ellipse(r * 0.18, -r * 0.85, r * 0.32, r * 0.14, -0.35, 0, Math.PI * 2);
+            c.fill();
+          }
+        } else {
+          // Kawaii Face for Mascotas & Gotas
+          const eyeX = r * 0.3;
+          const eyeY = -r * 0.04;
+          const eyeR = Math.max(2, r * 0.1);
+
+          c.fillStyle = '#1e1b4b';
+          [-1, 1].forEach(dir => {
+            c.beginPath();
+            c.arc(dir * eyeX, eyeY, eyeR, 0, Math.PI * 2);
+            c.fill();
+            // Eye sparkle
+            c.fillStyle = '#ffffff';
+            c.beginPath();
+            c.arc(dir * eyeX - eyeR * 0.3, eyeY - eyeR * 0.3, eyeR * 0.35, 0, Math.PI * 2);
+            c.fill();
+            c.fillStyle = '#1e1b4b';
+          });
+
+          // Blush cheeks
+          c.fillStyle = 'rgba(244, 63, 94, 0.45)';
+          [-1, 1].forEach(dir => {
+            c.beginPath();
+            c.ellipse(dir * r * 0.46, r * 0.14, r * 0.14, r * 0.08, 0, 0, Math.PI * 2);
+            c.fill();
+          });
+
+          // Smile
+          c.strokeStyle = '#1e1b4b';
+          c.lineWidth = Math.max(1.5, r * 0.065);
+          c.lineCap = 'round';
+          c.beginPath();
+          c.arc(0, r * 0.08, r * 0.16, 0.15 * Math.PI, 0.85 * Math.PI);
+          c.stroke();
+
+          // Crown on big Gotas
+          if (theme === 'gotas' && def.crown) {
+            c.fillStyle = '#facc15';
+            c.beginPath();
+            c.moveTo(-r * 0.28, -r * 0.88);
+            c.lineTo(-r * 0.18, -r * 1.18);
+            c.lineTo(0, -r * 0.96);
+            c.lineTo(r * 0.18, -r * 1.18);
+            c.lineTo(r * 0.28, -r * 0.88);
+            c.closePath();
+            c.fill();
+          }
+        }
+      }
+      c.restore();
+    }
+
+    function drawNextPreview() {
+      nextCtx.clearRect(0, 0, 56, 56);
+      const scale = Math.min(1, 20 / LEVELS[nextLevel].radius);
+      nextCtx.save();
+      nextCtx.translate(28, 28);
+      nextCtx.scale(scale, scale);
+      drawPiece(nextCtx, 0, 0, nextLevel, 0);
+      nextCtx.restore();
+    }
+
+    function updateUI() {
+      document.getElementById('scoreVal').textContent = score;
       if (score > bestScore) {
         bestScore = score;
         localStorage.setItem('fc_best', bestScore);
       }
-      localStorage.setItem('fc_save', JSON.stringify({ grid, score, energy }));
+      document.getElementById('bestVal').textContent = bestScore;
+
+      document.getElementById('badgeShake').textContent = powers.shake;
+      document.getElementById('badgeSmall').textContent = powers.small;
+      document.getElementById('badgeEvolve').textContent = powers.evolve;
+
+      document.getElementById('btnShake').classList.toggle('disabled', powers.shake <= 0);
+      document.getElementById('btnRemoveSmall').classList.toggle('disabled', powers.small <= 0);
+      document.getElementById('btnEvolve').classList.toggle('disabled', powers.evolve <= 0);
+
+      document.getElementById('admobBar').classList.toggle('hidden', adsRemoved);
+
+      localStorage.setItem('fc_p_shake', powers.shake);
+      localStorage.setItem('fc_p_small', powers.small);
+      localStorage.setItem('fc_p_evolve', powers.evolve);
+      drawNextPreview();
     }
 
-    function startGame() {
-      document.getElementById('start-screen').style.display = 'none';
-      document.getElementById('game-screen').style.display = 'flex';
-      loadSave();
-      render();
+    function showToast(text) {
+      const toast = document.getElementById('toastBanner');
+      toast.textContent = text;
+      toast.classList.add('show');
+      clearTimeout(toast._t);
+      toast._t = setTimeout(() => toast.classList.remove('show'), 2000);
     }
 
-    function goHome() {
-      document.getElementById('game-screen').style.display = 'none';
-      document.getElementById('start-screen').style.display = 'flex';
-    }
+    // Collisions & Merge
+    Events.on(engine, 'collisionStart', (event) => {
+      if (isGameOver) return;
+      for (const pair of event.pairs) {
+        const a = pair.bodyA;
+        const b = pair.bodyB;
+        if (
+          a.gameLevel !== undefined &&
+          b.gameLevel !== undefined &&
+          a.gameLevel === b.gameLevel &&
+          !a.merging &&
+          !b.merging &&
+          a.gameLevel < LEVELS.length - 1
+        ) {
+          a.merging = true;
+          b.merging = true;
+          const nextLvl = a.gameLevel + 1;
+          const midX = (a.position.x + b.position.x) / 2;
+          const midY = (a.position.y + b.position.y) / 2;
 
-    function showToast(msg) {
-      document.getElementById('toast').textContent = msg;
-    }
+          World.remove(engine.world, [a, b]);
+          const merged = createOrbBody(midX, midY, nextLvl);
+          World.add(engine.world, merged);
 
-    function render() {
-      document.getElementById('score-val').textContent = score;
-      document.getElementById('energy-val').textContent = energy;
-      document.getElementById('best-val').textContent = bestScore;
-
-      const boardEl = document.getElementById('board');
-      boardEl.innerHTML = '';
-
-      grid.forEach((level, idx) => {
-        const cell = document.createElement('div');
-        cell.className = 'cell' + (level !== null ? ' has-item' : '') + (selectedIndex === idx ? ' selected' : '');
-        cell.onclick = () => onCellClick(idx);
-
-        if (level !== null && ITEMS[level]) {
-          cell.innerHTML = `<span class="item-emoji">${ITEMS[level].emoji}</span><span class="item-lvl">Nv.${level + 1}</span>`;
+          score += LEVELS[nextLvl].points;
+          spawnParticles(midX, midY, LEVELS[nextLvl].c1);
+          playTone(320 + nextLvl * 55, 'triangle', 0.16, 0.14);
+          updateUI();
         }
-        boardEl.appendChild(cell);
+      }
+    });
+
+    // Drop Mechanics
+    function clampPointer(clientX) {
+      const rect = arenaWrapper.getBoundingClientRect();
+      const pad = LEVELS[currentLevel].radius + 6;
+      const relX = clientX - rect.left;
+      pointerX = Math.max(pad, Math.min(W - pad, relX));
+    }
+
+    function dropCurrentPiece() {
+      if (!canDrop || isGameOver) return;
+      canDrop = false;
+      const body = createOrbBody(pointerX, dropY, currentLevel);
+      World.add(engine.world, body);
+      playTone(240, 'sine', 0.08, 0.08);
+
+      currentLevel = nextLevel;
+      nextLevel = randomStartLevel();
+      pointerX = Math.max(LEVELS[currentLevel].radius + 6, Math.min(W - LEVELS[currentLevel].radius - 6, pointerX));
+      drawNextPreview();
+
+      setTimeout(() => {
+        canDrop = true;
+      }, 420);
+    }
+
+    arenaWrapper.addEventListener('pointermove', (e) => {
+      clampPointer(e.clientX);
+    });
+
+    arenaWrapper.addEventListener('pointerdown', (e) => {
+      clampPointer(e.clientX);
+    });
+
+    arenaWrapper.addEventListener('pointerup', (e) => {
+      clampPointer(e.clientX);
+      dropCurrentPiece();
+    });
+
+    // Power-ups Logic
+    document.getElementById('btnShake').addEventListener('click', () => {
+      if (powers.shake <= 0 || isGameOver) return;
+      const bodies = engine.world.bodies.filter(b => b.gameLevel !== undefined);
+      if (!bodies.length) return;
+      powers.shake--;
+      bodies.forEach(b => {
+        Body.applyForce(b, b.position, {
+          x: (Math.random() - 0.5) * 0.08 * b.mass,
+          y: -0.06 * b.mass
+        });
+      });
+      playTone(180, 'sawtooth', 0.2, 0.1);
+      showToast('😵 ¡Tablero sacudido!');
+      updateUI();
+    });
+
+    document.getElementById('btnRemoveSmall').addEventListener('click', () => {
+      if (powers.small <= 0 || isGameOver) return;
+      const bodies = engine.world.bodies.filter(b => b.gameLevel !== undefined);
+      if (!bodies.length) return;
+      const minLvl = Math.min(...bodies.map(b => b.gameLevel));
+      const toRemove = bodies.filter(b => b.gameLevel === minLvl);
+      powers.small--;
+      toRemove.forEach(b => {
+        spawnParticles(b.position.x, b.position.y, LEVELS[b.gameLevel].c1);
+        World.remove(engine.world, b);
+      });
+      playTone(520, 'sine', 0.18, 0.12);
+      showToast('🪄 ¡Piezas chicas eliminadas!');
+      updateUI();
+    });
+
+    document.getElementById('btnEvolve').addEventListener('click', () => {
+      if (powers.evolve <= 0 || isGameOver) return;
+      const bodies = engine.world.bodies.filter(b => b.gameLevel !== undefined && b.gameLevel < LEVELS.length - 1);
+      if (!bodies.length) return;
+      bodies.sort((a, b) => b.gameLevel - a.gameLevel);
+      const target = bodies[0];
+      const nextLvl = target.gameLevel + 1;
+      const pos = { x: target.position.x, y: target.position.y };
+      powers.evolve--;
+      World.remove(engine.world, target);
+      World.add(engine.world, createOrbBody(pos.x, pos.y, nextLvl));
+      spawnParticles(pos.x, pos.y, LEVELS[nextLvl].c1);
+      score += LEVELS[nextLvl].points;
+      playTone(620, 'triangle', 0.2, 0.14);
+      showToast('⬆️ ¡Evolución instantánea!');
+      updateUI();
+    });
+
+    // Theme & UI Controls
+    const themeSelect = document.getElementById('themeSelect');
+    themeSelect.value = currentTheme;
+    themeSelect.addEventListener('change', (e) => {
+      currentTheme = e.target.value;
+      localStorage.setItem('fc_theme', currentTheme);
+      drawNextPreview();
+      renderEvoGuide();
+      showToast(`🎨 Tema: ${THEME_NAMES[currentTheme]}`);
+    });
+
+    document.getElementById('soundBtn').addEventListener('click', (e) => {
+      soundOn = !soundOn;
+      e.currentTarget.textContent = soundOn ? '🔊' : '🔇';
+    });
+
+    function openModal(id) {
+      document.getElementById(id).classList.add('open');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+    }
+
+    document.querySelectorAll('[data-close]').forEach(btn => {
+      btn.addEventListener('click', () => closeModal(btn.getAttribute('data-close')));
+    });
+
+    document.getElementById('openShopBtn').addEventListener('click', () => openModal('shopModal'));
+    document.getElementById('removeAdLink').addEventListener('click', () => openModal('shopModal'));
+    document.getElementById('openGuideBtn').addEventListener('click', () => {
+      renderEvoGuide();
+      openModal('guideModal');
+    });
+
+    document.getElementById('buyNoAdsBtn').addEventListener('click', () => {
+      adsRemoved = true;
+      localStorage.setItem('fc_noads', '1');
+      updateUI();
+      closeModal('shopModal');
+      showToast('🚫 ¡Anuncios eliminados!');
+    });
+
+    document.getElementById('buyPackBtn').addEventListener('click', () => {
+      powers.shake += 5;
+      powers.small += 5;
+      powers.evolve += 5;
+      updateUI();
+      closeModal('shopModal');
+      showToast('🎁 ¡+5 Comodines agregados!');
+    });
+
+    function renderEvoGuide() {
+      const grid = document.getElementById('evoGrid');
+      grid.innerHTML = '';
+      LEVELS.forEach((lvl, idx) => {
+        const cell = document.createElement('div');
+        cell.className = 'evo-cell';
+        const c = document.createElement('canvas');
+        c.width = 44;
+        c.height = 44;
+        const cctx = c.getContext('2d');
+        const scale = Math.min(1, 17 / lvl.radius);
+        cctx.translate(22, 22);
+        cctx.scale(scale, scale);
+        drawPiece(cctx, 0, 0, idx, 0);
+        const lbl = document.createElement('span');
+        lbl.textContent = `Nv.${idx + 1}`;
+        cell.appendChild(c);
+        cell.appendChild(lbl);
+        grid.appendChild(cell);
       });
     }
 
-    function onCellClick(idx) {
-      if (selectedIndex === null) {
-        if (grid[idx] !== null) {
-          selectedIndex = idx;
-          showToast(`Seleccionado: ${ITEMS[grid[idx]].name}`);
-          render();
+    document.getElementById('restartBtn').addEventListener('click', () => {
+      const bodies = engine.world.bodies.filter(b => b.gameLevel !== undefined);
+      World.remove(engine.world, bodies);
+      score = 0;
+      isGameOver = false;
+      canDrop = true;
+      currentLevel = randomStartLevel();
+      nextLevel = randomStartLevel();
+      closeModal('gameOverModal');
+      updateUI();
+    });
+
+    // Main Render & Physics Loop
+    let lastTime = performance.now();
+    function loop(now) {
+      const dt = Math.min(32, now - lastTime);
+      lastTime = now;
+
+      if (!isGameOver) {
+        Engine.update(engine, dt);
+      }
+
+      ctx.clearRect(0, 0, W, H);
+
+      // Background twinkling stars
+      stars.forEach(s => {
+        ctx.fillStyle = `rgba(255, 255, 255, ${s.a})`;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Danger dashed line
+      ctx.save();
+      ctx.strokeStyle = 'rgba(203, 213, 225, 0.35)';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([6, 6]);
+      ctx.beginPath();
+      ctx.moveTo(10, dangerY);
+      ctx.lineTo(W - 10, dangerY);
+      ctx.stroke();
+      ctx.restore();
+
+      // Aiming vertical line & ready piece
+      if (canDrop && !isGameOver) {
+        ctx.save();
+        ctx.strokeStyle = 'rgba(250, 204, 21, 0.45)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([4, 5]);
+        ctx.beginPath();
+        ctx.moveTo(pointerX, dropY);
+        ctx.lineTo(pointerX, H - 10);
+        ctx.stroke();
+        ctx.restore();
+
+        drawPiece(ctx, pointerX, dropY, currentLevel, 0);
+      }
+
+      // Active physics pieces + Game Over check
+      const nowMs = Date.now();
+      for (const b of engine.world.bodies) {
+        if (b.gameLevel === undefined) continue;
+        drawPiece(ctx, b.position.x, b.position.y, b.gameLevel, b.angle);
+
+        if (
+          !isGameOver &&
+          nowMs - b.spawnTime > 2200 &&
+          b.position.y - LEVELS[b.gameLevel].radius < dangerY &&
+          Math.abs(b.velocity.y) < 0.25
+        ) {
+          isGameOver = true;
+          document.getElementById('finalScoreText').textContent = `Puntos: ${score}`;
+          openModal('gameOverModal');
+          playTone(150, 'sawtooth', 0.35, 0.14);
         }
-        return;
       }
 
-      if (selectedIndex === idx) {
-        selectedIndex = null;
-        showToast('Selección cancelada');
-        render();
-        return;
-      }
-
-      if (grid[idx] === null) {
-        grid[idx] = grid[selectedIndex];
-        grid[selectedIndex] = null;
-        selectedIndex = null;
-        saveGame();
-        render();
-        return;
-      }
-
-      if (grid[idx] === grid[selectedIndex]) {
-        const currentLvl = grid[idx];
-        if (currentLvl < ITEMS.length - 1) {
-          const nextLvl = currentLvl + 1;
-          grid[idx] = nextLvl;
-          grid[selectedIndex] = null;
-          selectedIndex = null;
-          score += ITEMS[nextLvl].pts;
-          energy += 5;
-          showToast(`✨ ¡Fusión! Creaste: ${ITEMS[nextLvl].name} (+${ITEMS[nextLvl].pts} pts)`);
-        } else {
-          grid[idx] = null;
-          grid[selectedIndex] = null;
-          selectedIndex = null;
-          score += 50000;
-          energy += 50;
-          showToast('👑 ¡Fusión Suprema! +50.000 pts y +50 ⚡');
+      // Merge particles
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life -= 0.035;
+        if (p.life <= 0) {
+          particles.splice(i, 1);
+          continue;
         }
-        saveGame();
-        render();
-        return;
+        ctx.globalAlpha = p.life;
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
       }
 
-      selectedIndex = idx;
-      showToast(`Seleccionado: ${ITEMS[grid[idx]].name}`);
-      render();
+      requestAnimationFrame(loop);
     }
 
-    function spawnCrystal() {
-      if (energy < 10) {
-        showToast('Sin energía suficiente. Tocá el botón ⚡ +50');
-        return;
-      }
-      const emptyCells = grid.map((v, i) => v === null ? i : null).filter(v => v !== null);
-      if (emptyCells.length === 0) {
-        showToast('¡Tablero lleno! Fusioná dos piezas iguales');
-        return;
-      }
-      const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-      grid[randomCell] = Math.random() < 0.8 ? 0 : 1;
-      energy -= 10;
-      selectedIndex = null;
-      showToast(`Apareció: ${ITEMS[grid[randomCell]].name}`);
-      saveGame();
-      render();
-    }
-
-    function rechargeEnergy() {
-      energy += 50;
-      showToast('⚡ +50 de Energía Cósmica recargada');
-      saveGame();
-      render();
-    }
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js');
-    }
+    window.addEventListener('resize', setupDimensions);
+    setupDimensions();
+    currentLevel = randomStartLevel();
+    nextLevel = randomStartLevel();
+    updateUI();
+    requestAnimationFrame(loop);
   </script>
 </body>
 </html>
