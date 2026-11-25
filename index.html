@@ -127,7 +127,7 @@
       background: rgba(16, 14, 44, 0.85);
       border: 1px solid rgba(124, 58, 237, 0.45);
       border-radius: 16px;
-      padding: 8px 14px;
+      padding: 8px 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -135,7 +135,7 @@
 
     .scores-left {
       display: flex;
-      gap: 18px;
+      gap: 14px;
       align-items: center;
     }
 
@@ -152,13 +152,17 @@
     }
 
     .score-value {
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 900;
       line-height: 1.1;
     }
 
     .record-value {
       color: #facc15;
+    }
+
+    .level-value {
+      color: #38bdf8;
     }
 
     .next-box {
@@ -294,10 +298,6 @@
       font-size: 11px;
     }
 
-    .admob-bar.hidden {
-      display: none;
-    }
-
     .ad-left {
       display: flex;
       align-items: center;
@@ -314,8 +314,8 @@
       border-radius: 4px;
     }
 
-    .ad-remove {
-      color: #facc15;
+    .ad-link {
+      color: #38bdf8;
       font-weight: 700;
       text-decoration: underline;
       background: none;
@@ -328,7 +328,7 @@
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(6, 5, 18, 0.82);
+      background: rgba(6, 5, 18, 0.85);
       backdrop-filter: blur(4px);
       display: none;
       justify-content: center;
@@ -381,7 +381,7 @@
       font-size: 12px;
       color: #cbd5e1;
       margin-bottom: 14px;
-      line-height: 1.4;
+      line-height: 1.45;
     }
 
     .shop-item {
@@ -413,13 +413,8 @@
       padding: 7px 12px;
       font-size: 11px;
       font-weight: 900;
-      color: #ffffff;
       cursor: pointer;
       white-space: nowrap;
-    }
-
-    .price-green {
-      background: #10b981;
     }
 
     .price-orange {
@@ -427,9 +422,32 @@
       color: #111827;
     }
 
+    .revive-btn {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(245, 158, 11, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .revive-btn:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
     .modal-primary-btn {
       width: 100%;
-      margin-top: 6px;
+      margin-top: 4px;
       padding: 10px;
       border-radius: 12px;
       border: 1px solid #4c42a6;
@@ -437,6 +455,19 @@
       color: #ffffff;
       font-size: 13px;
       font-weight: 700;
+      cursor: pointer;
+    }
+
+    .modal-ghost-btn {
+      width: 100%;
+      margin-top: 6px;
+      padding: 9px;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: transparent;
+      color: #cbd5e1;
+      font-size: 12px;
+      font-weight: 600;
       cursor: pointer;
     }
 
@@ -482,13 +513,13 @@
         </div>
       </div>
       <div class="header-actions">
-        <button id="openShopBtn" class="btn-pill">🛒 Tienda</button>
+        <button id="openShopBtn" class="btn-pill">🎁 Extra</button>
         <button id="openGuideBtn" class="btn-circle" title="Guía de evolución">📖</button>
         <button id="soundBtn" class="btn-circle" title="Sonido">🔊</button>
       </div>
     </div>
 
-    <!-- Score & Next Piece -->
+    <!-- Score, Level & Next Piece -->
     <div class="score-panel">
       <div class="scores-left">
         <div class="score-box">
@@ -498,6 +529,10 @@
         <div class="score-box">
           <span class="score-label">RÉCORD</span>
           <span id="bestVal" class="score-value record-value">0</span>
+        </div>
+        <div class="score-box">
+          <span class="score-label">NIVEL</span>
+          <span id="stageVal" class="score-value level-value">1</span>
         </div>
       </div>
       <div class="next-box">
@@ -531,39 +566,31 @@
       </button>
     </div>
 
-    <!-- AdMob Banner -->
+    <!-- AdMob Banner Slot -->
     <div id="admobBar" class="admob-bar">
       <div class="ad-left">
-        <span class="ad-tag">ANUNCIO</span>
-        <span>Espacio Banner AdMob (320x50)</span>
+        <span class="ad-tag">ADMOB</span>
+        <span>Banner Publicitario (320x50)</span>
       </div>
-      <button id="removeAdLink" class="ad-remove">Quitar</button>
+      <button id="morePowersLink" class="ad-link">+Comodines</button>
     </div>
   </div>
 
-  <!-- Modal Tienda Cósmica -->
+  <!-- Modal Comodines Bonificados (Rewarded Ads) -->
   <div id="shopModal" class="modal-overlay">
     <div class="modal-card">
       <div class="modal-header">
-        <h2>🛒 Tienda Cósmica</h2>
+        <h2>🎁 Comodines Bonificados</h2>
         <button class="close-modal" data-close="shopModal">✕</button>
       </div>
-      <p class="modal-desc">Personalizá tu experiencia o conseguí comodines extra para superar tu récord.</p>
+      <p class="modal-desc">Mirá un video publicitario corto para recargar tus comodines gratis y seguir subiendo de nivel.</p>
 
       <div class="shop-item">
         <div class="shop-info">
-          <h3>🚫 Quitar Anuncios</h3>
-          <p>Elimina el banner inferior para siempre</p>
+          <h3>✨ Pack +2 Comodines</h3>
+          <p>+2 Sacudir, +2 Quitar Chica y +2 Evolucionar</p>
         </div>
-        <button id="buyNoAdsBtn" class="price-btn price-green">USD 1.99</button>
-      </div>
-
-      <div class="shop-item">
-        <div class="shop-info">
-          <h3>🎁 Pack 5 Comodines</h3>
-          <p>+5 Sacudir, +5 Quitar Chica y +5 Evolucionar</p>
-        </div>
-        <button id="buyPackBtn" class="price-btn price-orange">USD 0.99</button>
+        <button id="watchPackAdBtn" class="price-btn price-orange">🎬 Ver Video</button>
       </div>
 
       <button class="modal-primary-btn" data-close="shopModal">Volver al Juego</button>
@@ -583,14 +610,18 @@
     </div>
   </div>
 
-  <!-- Modal Game Over -->
+  <!-- Modal Casi Perdés / Revivir con Video -->
   <div id="gameOverModal" class="modal-overlay">
     <div class="modal-card" style="text-align: center;">
       <div class="modal-header" style="justify-content: center;">
-        <h2>🌌 ¡Tablero Lleno!</h2>
+        <h2 id="gameOverTitle">⚠️ ¡Casi Perdés!</h2>
       </div>
-      <p class="modal-desc">Las figuras superaron la línea límite.<br><strong id="finalScoreText" style="color:#fff; font-size:16px;">Puntos: 0</strong></p>
-      <button id="restartBtn" class="modal-primary-btn" style="background: linear-gradient(135deg,#8b5cf6,#ec4899); border:none;">Jugar de Nuevo</button>
+      <p class="modal-desc" id="gameOverDesc">
+        Las figuras llegaron al límite en el <strong style="color:#38bdf8;">Nivel 1</strong>.<br>
+        <strong id="finalScoreText" style="color:#fff; font-size:16px;">Puntos: 0</strong>
+      </p>
+      <button id="reviveVideoBtn" class="revive-btn">🎬 Ver Video para Revivir</button>
+      <button id="restartBtn" class="modal-ghost-btn">Reiniciar Partida desde 0</button>
     </div>
   </div>
 
@@ -600,6 +631,40 @@
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js').catch(() => {});
       });
+    }
+
+    // Puente preparado para Google AdMob Rewarded Ads
+    const ADMOB_CONFIG = {
+      appId: 'ca-app-pub-XXXXXXXXXXXXXXXX~XXXXXXXXXX',
+      rewardedReviveId: 'ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX'
+    };
+
+    function showRewardedVideoAd(onRewardEarned) {
+      // Si en el futuro conectás el plugin nativo de AdMob en Android, se ejecuta aquí:
+      if (window.admob && window.admob.rewarded) {
+        window.admob.rewarded.show().then(() => onRewardEarned()).catch(() => onRewardEarned());
+        return;
+      }
+      // Mientras tanto, simulación visual de 3 segundos para probar el flujo en Android/Web
+      let secs = 3;
+      const btn = document.getElementById('reviveVideoBtn');
+      const packBtn = document.getElementById('watchPackAdBtn');
+      const activeBtn = btn.offsetParent !== null ? btn : packBtn;
+      const origText = activeBtn.textContent;
+      activeBtn.disabled = true;
+      activeBtn.textContent = `⏳ Viendo anuncio (${secs}s)...`;
+
+      const timer = setInterval(() => {
+        secs--;
+        if (secs > 0) {
+          activeBtn.textContent = `⏳ Viendo anuncio (${secs}s)...`;
+        } else {
+          clearInterval(timer);
+          activeBtn.disabled = false;
+          activeBtn.textContent = origText;
+          onRewardEarned();
+        }
+      }, 1000);
     }
 
     const { Engine, World, Bodies, Body, Events } = Matter;
@@ -627,8 +692,9 @@
     let currentTheme = localStorage.getItem('fc_theme') || 'mascotas';
     let score = 0;
     let bestScore = parseInt(localStorage.getItem('fc_best') || '0', 10);
+    let gameStage = 1;
+    let reviveUsedThisRun = false;
     let soundOn = true;
-    let adsRemoved = localStorage.getItem('fc_noads') === '1';
 
     let powers = {
       shake: parseInt(localStorage.getItem('fc_p_shake') ?? '2', 10),
@@ -704,7 +770,8 @@
     }
 
     function randomStartLevel() {
-      return Math.floor(Math.random() * 4);
+      const maxSpawn = gameStage >= 4 ? 5 : 4;
+      return Math.floor(Math.random() * maxSpawn);
     }
 
     function createOrbBody(x, y, level) {
@@ -745,7 +812,6 @@
       c.rotate(angle);
 
       if (theme === 'cristales') {
-        // Polygon Gem
         const sides = def.sides;
         const grad = c.createRadialGradient(-r * 0.3, -r * 0.3, r * 0.1, 0, 0, r);
         grad.addColorStop(0, '#ffffff');
@@ -767,7 +833,6 @@
         c.strokeStyle = 'rgba(255,255,255,0.75)';
         c.stroke();
 
-        // Inner Facet
         c.beginPath();
         for (let i = 0; i < sides; i++) {
           const a = (i * 2 * Math.PI) / sides - Math.PI / 2;
@@ -780,19 +845,16 @@
         c.fillStyle = 'rgba(255, 255, 255, 0.22)';
         c.fill();
 
-        // Specular dot
         c.beginPath();
         c.arc(-r * 0.26, -r * 0.26, r * 0.13, 0, Math.PI * 2);
         c.fillStyle = 'rgba(255,255,255,0.85)';
         c.fill();
       } else {
-        // Mascotas, Gotas, Frutas base sphere
         if (theme === 'mascotas') {
           c.fillStyle = def.c2;
           c.strokeStyle = 'rgba(255,255,255,0.5)';
           c.lineWidth = 1.5;
           if (def.ear === 'cat') {
-            // Left & right pointy ears
             [-1, 1].forEach(dir => {
               c.beginPath();
               c.moveTo(dir * r * 0.35, -r * 0.72);
@@ -819,7 +881,6 @@
           }
         }
 
-        // Main glossy gradient circle
         const grad = c.createRadialGradient(-r * 0.32, -r * 0.35, r * 0.08, 0, 0, r);
         grad.addColorStop(0, '#ffffff');
         grad.addColorStop(0.28, def.c1);
@@ -834,14 +895,12 @@
         c.strokeStyle = 'rgba(255,255,255,0.45)';
         c.stroke();
 
-        // Top gloss reflection
         c.beginPath();
         c.ellipse(-r * 0.32, -r * 0.38, r * 0.24, r * 0.13, -0.6, 0, Math.PI * 2);
         c.fillStyle = 'rgba(255,255,255,0.65)';
         c.fill();
 
         if (theme === 'frutas') {
-          // Seeds
           c.fillStyle = 'rgba(30, 27, 75, 0.55)';
           const seeds = [[-0.35, -0.1], [0.32, -0.15], [0, 0.22], [-0.25, 0.42], [0.28, 0.38]];
           seeds.forEach(([sx, sy]) => {
@@ -849,7 +908,6 @@
             c.ellipse(sx * r, sy * r, r * 0.06, r * 0.1, 0.2, 0, Math.PI * 2);
             c.fill();
           });
-          // Green leaf
           if (def.leaf || level >= 1) {
             c.fillStyle = '#22c55e';
             c.beginPath();
@@ -857,7 +915,6 @@
             c.fill();
           }
         } else {
-          // Kawaii Face for Mascotas & Gotas
           const eyeX = r * 0.3;
           const eyeY = -r * 0.04;
           const eyeR = Math.max(2, r * 0.1);
@@ -867,7 +924,6 @@
             c.beginPath();
             c.arc(dir * eyeX, eyeY, eyeR, 0, Math.PI * 2);
             c.fill();
-            // Eye sparkle
             c.fillStyle = '#ffffff';
             c.beginPath();
             c.arc(dir * eyeX - eyeR * 0.3, eyeY - eyeR * 0.3, eyeR * 0.35, 0, Math.PI * 2);
@@ -875,7 +931,6 @@
             c.fillStyle = '#1e1b4b';
           });
 
-          // Blush cheeks
           c.fillStyle = 'rgba(244, 63, 94, 0.45)';
           [-1, 1].forEach(dir => {
             c.beginPath();
@@ -883,7 +938,6 @@
             c.fill();
           });
 
-          // Smile
           c.strokeStyle = '#1e1b4b';
           c.lineWidth = Math.max(1.5, r * 0.065);
           c.lineCap = 'round';
@@ -891,7 +945,6 @@
           c.arc(0, r * 0.08, r * 0.16, 0.15 * Math.PI, 0.85 * Math.PI);
           c.stroke();
 
-          // Crown on big Gotas
           if (theme === 'gotas' && def.crown) {
             c.fillStyle = '#facc15';
             c.beginPath();
@@ -918,6 +971,16 @@
       nextCtx.restore();
     }
 
+    function checkStageProgression() {
+      const newStage = Math.floor(score / 250) + 1;
+      if (newStage > gameStage) {
+        gameStage = newStage;
+        engine.gravity.y = Math.min(1.65, 1.15 + (gameStage - 1) * 0.06);
+        playTone(680, 'sine', 0.24, 0.15);
+        showToast(`🚀 ¡Subiste al Nivel ${gameStage}!`);
+      }
+    }
+
     function updateUI() {
       document.getElementById('scoreVal').textContent = score;
       if (score > bestScore) {
@@ -925,6 +988,7 @@
         localStorage.setItem('fc_best', bestScore);
       }
       document.getElementById('bestVal').textContent = bestScore;
+      document.getElementById('stageVal').textContent = gameStage;
 
       document.getElementById('badgeShake').textContent = powers.shake;
       document.getElementById('badgeSmall').textContent = powers.small;
@@ -933,8 +997,6 @@
       document.getElementById('btnShake').classList.toggle('disabled', powers.shake <= 0);
       document.getElementById('btnRemoveSmall').classList.toggle('disabled', powers.small <= 0);
       document.getElementById('btnEvolve').classList.toggle('disabled', powers.evolve <= 0);
-
-      document.getElementById('admobBar').classList.toggle('hidden', adsRemoved);
 
       localStorage.setItem('fc_p_shake', powers.shake);
       localStorage.setItem('fc_p_small', powers.small);
@@ -947,7 +1009,7 @@
       toast.textContent = text;
       toast.classList.add('show');
       clearTimeout(toast._t);
-      toast._t = setTimeout(() => toast.classList.remove('show'), 2000);
+      toast._t = setTimeout(() => toast.classList.remove('show'), 2200);
     }
 
     // Collisions & Merge
@@ -975,6 +1037,7 @@
           World.add(engine.world, merged);
 
           score += LEVELS[nextLvl].points;
+          checkStageProgression();
           spawnParticles(midX, midY, LEVELS[nextLvl].c1);
           playTone(320 + nextLvl * 55, 'triangle', 0.16, 0.14);
           updateUI();
@@ -1007,14 +1070,8 @@
       }, 420);
     }
 
-    arenaWrapper.addEventListener('pointermove', (e) => {
-      clampPointer(e.clientX);
-    });
-
-    arenaWrapper.addEventListener('pointerdown', (e) => {
-      clampPointer(e.clientX);
-    });
-
+    arenaWrapper.addEventListener('pointermove', (e) => clampPointer(e.clientX));
+    arenaWrapper.addEventListener('pointerdown', (e) => clampPointer(e.clientX));
     arenaWrapper.addEventListener('pointerup', (e) => {
       clampPointer(e.clientX);
       dropCurrentPiece();
@@ -1066,6 +1123,7 @@
       World.add(engine.world, createOrbBody(pos.x, pos.y, nextLvl));
       spawnParticles(pos.x, pos.y, LEVELS[nextLvl].c1);
       score += LEVELS[nextLvl].points;
+      checkStageProgression();
       playTone(620, 'triangle', 0.2, 0.14);
       showToast('⬆️ ¡Evolución instantánea!');
       updateUI();
@@ -1099,27 +1157,43 @@
     });
 
     document.getElementById('openShopBtn').addEventListener('click', () => openModal('shopModal'));
-    document.getElementById('removeAdLink').addEventListener('click', () => openModal('shopModal'));
+    document.getElementById('morePowersLink').addEventListener('click', () => openModal('shopModal'));
     document.getElementById('openGuideBtn').addEventListener('click', () => {
       renderEvoGuide();
       openModal('guideModal');
     });
 
-    document.getElementById('buyNoAdsBtn').addEventListener('click', () => {
-      adsRemoved = true;
-      localStorage.setItem('fc_noads', '1');
-      updateUI();
-      closeModal('shopModal');
-      showToast('🚫 ¡Anuncios eliminados!');
+    document.getElementById('watchPackAdBtn').addEventListener('click', () => {
+      showRewardedVideoAd(() => {
+        powers.shake += 2;
+        powers.small += 2;
+        powers.evolve += 2;
+        updateUI();
+        closeModal('shopModal');
+        showToast('🎁 ¡+2 Comodines recibidos!');
+      });
     });
 
-    document.getElementById('buyPackBtn').addEventListener('click', () => {
-      powers.shake += 5;
-      powers.small += 5;
-      powers.evolve += 5;
-      updateUI();
-      closeModal('shopModal');
-      showToast('🎁 ¡+5 Comodines agregados!');
+    // Revivir viendo video (limpia la mitad superior del tablero)
+    document.getElementById('reviveVideoBtn').addEventListener('click', () => {
+      showRewardedVideoAd(() => {
+        const bodies = engine.world.bodies.filter(b => b.gameLevel !== undefined);
+        const clearLine = H * 0.56;
+        bodies.forEach(b => {
+          if (b.position.y < clearLine) {
+            spawnParticles(b.position.x, b.position.y, LEVELS[b.gameLevel].c1);
+            World.remove(engine.world, b);
+          } else {
+            b.spawnTime = Date.now();
+          }
+        });
+        reviveUsedThisRun = true;
+        isGameOver = false;
+        canDrop = true;
+        closeModal('gameOverModal');
+        playTone(580, 'triangle', 0.25, 0.16);
+        showToast('✨ ¡Reviviste! Parte superior despejada');
+      });
     });
 
     function renderEvoGuide() {
@@ -1148,6 +1222,9 @@
       const bodies = engine.world.bodies.filter(b => b.gameLevel !== undefined);
       World.remove(engine.world, bodies);
       score = 0;
+      gameStage = 1;
+      engine.gravity.y = 1.15;
+      reviveUsedThisRun = false;
       isGameOver = false;
       canDrop = true;
       currentLevel = randomStartLevel();
@@ -1168,7 +1245,6 @@
 
       ctx.clearRect(0, 0, W, H);
 
-      // Background twinkling stars
       stars.forEach(s => {
         ctx.fillStyle = `rgba(255, 255, 255, ${s.a})`;
         ctx.beginPath();
@@ -1215,7 +1291,16 @@
           Math.abs(b.velocity.y) < 0.25
         ) {
           isGameOver = true;
-          document.getElementById('finalScoreText').textContent = `Puntos: ${score}`;
+          const reviveBtn = document.getElementById('reviveVideoBtn');
+          if (!reviveUsedThisRun) {
+            document.getElementById('gameOverTitle').textContent = '⚠️ ¡Casi Perdés!';
+            document.getElementById('gameOverDesc').innerHTML = `Las figuras llegaron al límite en el <strong style="color:#38bdf8;">Nivel ${gameStage}</strong>.<br><strong style="color:#fff; font-size:16px;">Puntos: ${score}</strong>`;
+            reviveBtn.style.display = 'flex';
+          } else {
+            document.getElementById('gameOverTitle').textContent = '🌌 ¡Tablero Lleno!';
+            document.getElementById('gameOverDesc').innerHTML = `Llegaste hasta el <strong style="color:#38bdf8;">Nivel ${gameStage}</strong>.<br><strong style="color:#fff; font-size:16px;">Puntos: ${score}</strong>`;
+            reviveBtn.style.display = 'none';
+          }
           openModal('gameOverModal');
           playTone(150, 'sawtooth', 0.35, 0.14);
         }
